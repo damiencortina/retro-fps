@@ -1,0 +1,20 @@
+{
+  "name": "retro_fps",
+  "version": "1.0.0",
+  "description": "Super cool retro fps",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Damien Cortina",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^21.2.2",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
+  },
+  "dependencies": {
+    "babylonjs": "^5.31.1"
+  }
+}
