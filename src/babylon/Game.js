@@ -1,5 +1,5 @@
 import * as BABYLON from 'babylonjs';
-import {World} from './World';
+import {World} from './world/World';
 import {Player} from './Player';
 
 export class Game{
