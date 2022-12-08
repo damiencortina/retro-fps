@@ -11,12 +11,12 @@ export class Room{
     backWall
     rightWall
     leftWall
-    constructor(id, position, size, floorTexture, wallTexture, scene) {
+    constructor(id, position, size, floorTexture, wallTexture, doors, scene) {
         this.id = id
         this.position = position
         this.size = size
         this.createFloor(id, position, size, floorTexture, scene)
-        this.createWalls(id, position, size, wallTexture, scene)
+        this.createWalls(id, position, size, wallTexture, doors, scene)
     }
 
     createFloor(id, position, size, floorTexture, scene){
@@ -33,7 +33,7 @@ export class Room{
         this.ground = ground
     }
 
-    createWalls(id, position, size, wallTexture, scene){
+    createWalls(id, position, size, wallTexture, doors, scene){
         this.frontWall =
             new Wall(
                 id+'_front_wall',
@@ -45,7 +45,8 @@ export class Room{
                     0,
                     0,
                     position.z+size.z/2),
-                0)
+                0,
+                doors[0])
         this.backWall =
             new Wall(
                 id+'_back_wall',
@@ -57,7 +58,8 @@ export class Room{
                     0,
                     0,
                     position.z-size.z/2),
-                Math.PI)
+                Math.PI,
+                doors[1])
         this.rightWall =
             new Wall(
                 id+'_right_wall',
@@ -69,7 +71,8 @@ export class Room{
                     position.x+size.x/2,
                     0,
                     0),
-                Math.PI/2)
+                Math.PI/2,
+                doors[2])
         this.leftWall =
             new Wall(
                 id+'_left_wall',
@@ -81,6 +84,7 @@ export class Room{
                     position.x-size.x/2,
                     0,
                     0),
-                3/2*Math.PI)
+                3/2*Math.PI,
+                doors[3])
     }
 }
