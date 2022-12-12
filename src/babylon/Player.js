@@ -1,5 +1,6 @@
 import * as BABYLON from 'babylonjs';
 import {Game} from './Game'
+import {World} from "./world/World";
 
 export class Player{
 
@@ -12,7 +13,8 @@ export class Player{
         this.size = 3;                                                                         // Player size
         this.controlEnabled = false;                                                           // Pointer locked
         this.speed = 3;                                                                        // Player speed
-        this.hitbox = BABYLON.Mesh.CreateBox("hitBoxPlayer", 3, this.game.scene);  // Player's hit box
+        this.hitbox = BABYLON.MeshBuilder.CreateBox("hitBoxPlayer", {size: World.pixelRatio}, this.game.scene);  // Player's hit box
+        this.hitbox.position.y = 2*World.pixelRatio
         this.camera = this.initCamera();                                                       // Camera
         this.game.scene.activeCamera = this.camera;
     }

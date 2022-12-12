@@ -11,11 +11,13 @@ export class Room{
     backWall
     rightWall
     leftWall
-    constructor(id, position, size, floorTexture, wallTexture, doors, scene) {
+    constructor(id, position, size, floorTexture, ceilingTexture, wallTexture, doors, scene) {
         this.id = id
+        position.y += size.y/2
         this.position = position
         this.size = size
         this.createFloor(id, position, size, floorTexture, scene)
+        this.createCeiling(id, position, size, ceilingTexture, scene)
         this.createWalls(id, position, size, wallTexture, doors, scene)
     }
 
@@ -33,6 +35,21 @@ export class Room{
         this.ground = ground
     }
 
+    createCeiling(id, position, size, ceilingTexture, scene){
+        let ceilingMaterial = new BABYLON.StandardMaterial(id+"_ceiling_material", scene);
+        ceilingMaterial.diffuseTexture = new BABYLON.Texture(ceilingTexture, scene, undefined, undefined, BABYLON.Texture.NEAREST_SAMPLINGMODE);
+        ceilingMaterial.diffuseTexture.uScale = size.x/World.pixelRatio;
+        ceilingMaterial.diffuseTexture.vScale = size.z/World.pixelRatio;
+        let ceiling = BABYLON.MeshBuilder.CreatePlane(id+"_ceiling", {
+            width: size.x,
+            height: size.z,
+        }, scene);
+        ceiling.position = new BABYLON.Vector3(position.x, position.y+size.y/2, position.z)
+        ceiling.material = ceilingMaterial
+        ceiling.rotation =  new BABYLON.Vector3( -Math.PI/2,0, 0)
+        this.ground = ceiling
+    }
+
     createWalls(id, position, size, wallTexture, doors, scene){
         this.frontWall =
             new Wall(
@@ -42,24 +59,11 @@ export class Room{
                 size.y,
                 wallTexture,
                 new BABYLON.Vector3(
-                    0,
-                    0,
+                    position.x,
+                    position.y,
                     position.z+size.z/2),
                 0,
                 doors[0])
-        this.backWall =
-            new Wall(
-                id+'_back_wall',
-                scene,
-                size.x,
-                size.y,
-                wallTexture,
-                new BABYLON.Vector3(
-                    0,
-                    0,
-                    position.z-size.z/2),
-                Math.PI,
-                doors[1])
         this.rightWall =
             new Wall(
                 id+'_right_wall',
@@ -69,9 +73,22 @@ export class Room{
                 wallTexture,
                 new BABYLON.Vector3(
                     position.x+size.x/2,
-                    0,
-                    0),
+                    position.y,
+                    position.z),
                 Math.PI/2,
+                doors[1])
+        this.backWall =
+            new Wall(
+                id+'_back_wall',
+                scene,
+                size.x,
+                size.y,
+                wallTexture,
+                new BABYLON.Vector3(
+                    position.x,
+                    position.y,
+                    position.z-size.z/2),
+                Math.PI,
                 doors[2])
         this.leftWall =
             new Wall(
@@ -82,8 +99,8 @@ export class Room{
                 wallTexture,
                 new BABYLON.Vector3(
                     position.x-size.x/2,
-                    0,
-                    0),
+                    position.y,
+                    position.z),
                 3/2*Math.PI,
                 doors[3])
     }
