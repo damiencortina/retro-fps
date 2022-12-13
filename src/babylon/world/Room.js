@@ -22,28 +22,28 @@ export class Room{
     }
 
     createFloor(id, position, size, floorTexture, scene){
-        let floorMaterial = new BABYLON.StandardMaterial(id+"_floor_material", scene);
-        floorMaterial.diffuseTexture = new BABYLON.Texture(floorTexture, scene, undefined, undefined, BABYLON.Texture.NEAREST_SAMPLINGMODE);
-        floorMaterial.diffuseTexture.uScale = size.x/World.pixelRatio;
-        floorMaterial.diffuseTexture.vScale = size.z/World.pixelRatio;
+        let floorMaterial = new BABYLON.StandardMaterial(id+"_floor_material", scene)
+        floorMaterial.diffuseTexture = new BABYLON.Texture(floorTexture, scene, undefined, undefined, BABYLON.Texture.NEAREST_SAMPLINGMODE)
+        floorMaterial.diffuseTexture.uScale = size.x/World.pixelRatio
+        floorMaterial.diffuseTexture.vScale = size.z/World.pixelRatio
         let ground = BABYLON.MeshBuilder.CreateGround(id+"_ground", {
             width: size.x,
             height: size.z
-        }, scene);
+        }, scene)
         ground.position = new BABYLON.Vector3(position.x, position.y-size.y/2, position.z)
         ground.material = floorMaterial
         this.ground = ground
     }
 
     createCeiling(id, position, size, ceilingTexture, scene){
-        let ceilingMaterial = new BABYLON.StandardMaterial(id+"_ceiling_material", scene);
-        ceilingMaterial.diffuseTexture = new BABYLON.Texture(ceilingTexture, scene, undefined, undefined, BABYLON.Texture.NEAREST_SAMPLINGMODE);
-        ceilingMaterial.diffuseTexture.uScale = size.x/World.pixelRatio;
-        ceilingMaterial.diffuseTexture.vScale = size.z/World.pixelRatio;
+        let ceilingMaterial = new BABYLON.StandardMaterial(id+"_ceiling_material", scene)
+        ceilingMaterial.diffuseTexture = new BABYLON.Texture(ceilingTexture, scene, undefined, undefined, BABYLON.Texture.NEAREST_SAMPLINGMODE)
+        ceilingMaterial.diffuseTexture.uScale = size.x/World.pixelRatio
+        ceilingMaterial.diffuseTexture.vScale = size.z/World.pixelRatio
         let ceiling = BABYLON.MeshBuilder.CreatePlane(id+"_ceiling", {
             width: size.x,
             height: size.z,
-        }, scene);
+        }, scene)
         ceiling.position = new BABYLON.Vector3(position.x, position.y+size.y/2, position.z)
         ceiling.material = ceilingMaterial
         ceiling.rotation =  new BABYLON.Vector3( -Math.PI/2,0, 0)

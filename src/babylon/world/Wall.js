@@ -1,4 +1,4 @@
-import * as BABYLON from "babylonjs";
+import * as BABYLON from "babylonjs"
 import {World} from "./World"
 
 export class Wall{
@@ -102,10 +102,10 @@ export class Wall{
         } ,scene)
         plane.position = position
         plane.rotation.y = angle
-        let wallMaterial = new BABYLON.StandardMaterial(id+"_material", scene);
-        wallMaterial.diffuseTexture = new BABYLON.Texture(texture, scene, undefined, undefined, BABYLON.Texture.NEAREST_SAMPLINGMODE);
-        wallMaterial.diffuseTexture.uScale = width/World.pixelRatio;
-        wallMaterial.diffuseTexture.vScale = height/World.pixelRatio;
+        let wallMaterial = new BABYLON.StandardMaterial(id+"_material", scene)
+        wallMaterial.diffuseTexture = new BABYLON.Texture(texture, scene, undefined, undefined, BABYLON.Texture.NEAREST_SAMPLINGMODE)
+        wallMaterial.diffuseTexture.uScale = width/World.pixelRatio
+        wallMaterial.diffuseTexture.vScale = height/World.pixelRatio
         plane.material = wallMaterial
     }
 }
