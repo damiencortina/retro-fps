@@ -10,7 +10,7 @@
   "author": "Damien Cortina",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^21.2.2",
+    "electron": "^28.2.0",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0"
   },
