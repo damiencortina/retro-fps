@@ -2,26 +2,52 @@ import * as BABYLON from "babylonjs"
 import {World} from "./World"
 
 export class Wall{
-    id
-    width
-    height
-    position
-    constructor(id, scene, width, height, texture, position, angle, door = null) {
+    id:string
+    width:number
+    height:number
+    position:BABYLON.Vector3
+    constructor(
+        id:string,
+        scene:BABYLON.Scene,
+        width:number,
+        height: number, 
+        textureFile: string,
+        position: BABYLON.Vector3,
+        angle: number,
+        door:any = null
+    ) {
         this.id = id
         this.width = width
         this.height = height
         this.position = position
         if(door) {
-            this.createWallWithDoor(id, scene, width, height, texture, position, angle, door)
+            this.createWallWithDoor(id, scene, width, height, textureFile, position, angle, door)
         } else {
-            this.createWall(id, scene, width, height, texture, position, angle)
-        }    }
-
-    createWall(id, scene, width, height, texture, position, angle) {
-        this.createPlane(id, scene, width, height, texture, position, angle)
+            this.createWall(id, scene, width, height, textureFile, position, angle)
+        }    
     }
 
-    createWallWithDoor(id, scene, width, height, texture, position, angle, door){
+    createWall(
+        id:string,
+        scene:BABYLON.Scene,
+        width:number,
+        height: number, 
+        textureFile: string,
+        position: BABYLON.Vector3,
+        angle: number,) {
+        this.createPlane(id, scene, width, height, textureFile, position, angle)
+    }
+
+    createWallWithDoor(
+        id:string,
+        scene:BABYLON.Scene,
+        width:number,
+        height: number, 
+        textureFile: string,
+        position: BABYLON.Vector3,
+        angle: number,
+        door:any
+    ){
         let doorWidth = door.width
         let doorHeight = door.height
         let doorPosition = door.position
@@ -35,7 +61,7 @@ export class Wall{
                     scene,
                     leftPlaneWidth,
                     height,
-                    texture,
+                    textureFile,
                     new BABYLON.Vector3(
                         position.x - width/2 + doorPosition.x - doorWidth / 2 - leftPlaneWidth / 2,
                         position.y,
@@ -51,7 +77,7 @@ export class Wall{
                     scene,
                     rightPlaneWidth,
                     height,
-                    texture,
+                    textureFile,
                     new BABYLON.Vector3(
                         position.x - width/2 + doorPosition.x + doorWidth / 2 + rightPlaneWidth / 2,
                         position.y,
@@ -67,7 +93,7 @@ export class Wall{
                     scene,
                     doorWidth,
                     bottomPlaneHeight,
-                    texture,
+                    textureFile,
                     new BABYLON.Vector3(
                         position.x - width/2 + doorPosition.x,
                         position.y - height/2 + doorPosition.y - doorHeight / 2 - bottomPlaneHeight / 2,
@@ -83,7 +109,7 @@ export class Wall{
                     scene,
                     doorWidth,
                     topPlaneHeight,
-                    texture,
+                    textureFile,
                     new BABYLON.Vector3(
                         position.x - width/2 + doorPosition.x,
                         position.y - height/2 + doorPosition.y + doorHeight / 2 + topPlaneHeight / 2,
@@ -95,17 +121,26 @@ export class Wall{
         }
     }
 
-    createPlane(id, scene, width, height, texture, position, angle){
+    createPlane(
+        id:string,
+        scene:BABYLON.Scene,
+        width:number,
+        height: number, 
+        textureFile: string,
+        position: BABYLON.Vector3,
+        angle: number,
+    ){
+        let texture = new BABYLON.Texture(textureFile, scene, undefined, undefined, BABYLON.Texture.NEAREST_SAMPLINGMODE)
+        texture.uScale = width/World.pixelRatio
+        texture.vScale = height/World.pixelRatio
+        let wallMaterial = new BABYLON.StandardMaterial(id+"_material", scene)
+        wallMaterial.diffuseTexture = texture;
         let plane = BABYLON.MeshBuilder.CreatePlane(id,{
             width: width,
             height: height
         } ,scene)
         plane.position = position
         plane.rotation.y = angle
-        let wallMaterial = new BABYLON.StandardMaterial(id+"_material", scene)
-        wallMaterial.diffuseTexture = new BABYLON.Texture(texture, scene, undefined, undefined, BABYLON.Texture.NEAREST_SAMPLINGMODE)
-        wallMaterial.diffuseTexture.uScale = width/World.pixelRatio
-        wallMaterial.diffuseTexture.vScale = height/World.pixelRatio
         plane.material = wallMaterial
     }
 }
