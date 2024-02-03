@@ -4,18 +4,29 @@ import {World} from "./world/World"
 
 export class Player{
 
-    constructor(game) {
-        this.game = game                                                                      // Game
-        this.spawnPoint = new BABYLON.Vector3(0, 0, -1)                             // Spawn point
-        this.directionnalControls = ['z','s','q','d']                                         // Directional controls keys
-        this.axisMovement = [false,false,false,false]                                         // Movement axis [forward, backward, left, right] (true if moving)
-        this.angularSensibility = 1                                                           // Mouse sensibility
-        this.size = 3                                                                         // Player size
-        this.controlEnabled = false                                                           // Pointer locked
-        this.speed = 3                                                                        // Player speed
-        this.hitbox = BABYLON.MeshBuilder.CreateBox("hitBoxPlayer", {size: World.pixelRatio}, this.game.scene)  // Player's hit box
+    game: Game                      // Game
+    spawnPoint: BABYLON.Vector3     // Spawn point
+    directionnalControls: string[]  // Directional controls keys
+    axisMovement: boolean[]         // Movement axis [forward, backward, left, right] (true if moving)
+    angularSensibility: number      // Mouse sensibility
+    size: number                    // Player size
+    controlEnabled: boolean         // Pointer locked
+    speed: number                   // Player speed
+    hitbox: BABYLON.Mesh            // Player's hit box
+    camera: BABYLON.FreeCamera      // Camera
+
+    constructor(game: Game) {
+        this.game = game                                                                      
+        this.spawnPoint = new BABYLON.Vector3(0, 0, -1)                             
+        this.directionnalControls = ['z','s','q','d']                                         
+        this.axisMovement = [false,false,false,false]                                         
+        this.angularSensibility = 1                                                           
+        this.size = 3                                                                         
+        this.controlEnabled = false                                                           
+        this.speed = 3                                                                        
+        this.hitbox = BABYLON.MeshBuilder.CreateBox("hitBoxPlayer", {size: World.pixelRatio}, this.game.scene)  
         this.hitbox.position.y = 2*World.pixelRatio
-        this.camera = this.initCamera()                                                       // Camera
+        this.camera = this.initCamera()                                                       
         this.game.scene.activeCamera = this.camera
     }
 
@@ -82,7 +93,7 @@ export class Player{
     * Update this.axisMovement to reflect players currently followed direction
     * Called on keydown event (set to true) and keyup event (set to false)
     */
-    updateAxisMovement(key, status) {
+    updateAxisMovement(key: string, status: boolean) {
         switch (key) {
             case this.directionnalControls[0]:
                 this.axisMovement[0] = status // FORWARD
@@ -105,7 +116,7 @@ export class Player{
     * Move the player using this.axisMovement
     * Called on each frame
     */
-    checkMove(ratioFps) {
+    checkMove(ratioFps: number) {
         let relativeSpeed = this.speed / ratioFps
         if (this.axisMovement) {
             let rotationPoint = this.hitbox.rotation.y

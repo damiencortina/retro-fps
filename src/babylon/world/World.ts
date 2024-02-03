@@ -7,8 +7,8 @@ import ceilingTexture from "./textures/texture.png"
 export class World {
     static pixelRatio = 16 // Textures are 16x16 pixels squares
     light
-    rooms = []
-    constructor(scene) {
+    rooms:Room[] = []
+    constructor(scene:BABYLON.Scene) {
         this.light = new BABYLON.HemisphericLight('light', new BABYLON.Vector3(0, World.pixelRatio, 0), scene)
         let room1Doors = [
             {

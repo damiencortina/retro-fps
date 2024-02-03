@@ -10,10 +10,10 @@ export class Game{
     world
     player
     constructor(){
-        this.canvas = document.getElementById('renderCanvas')
+        this.canvas = document.getElementById('renderCanvas') as HTMLCanvasElement
         this.engine = this.initEngine()
         this.scene = this.initScene()
-        this.fps = null
+        this.fps = 0
         this.world = new World(this.scene)
         this.player = new Player(this)
     }
@@ -40,11 +40,11 @@ export class Game{
         this.scene.render()
     }
 
-    static degToRad(deg){
+    static degToRad(deg: number){
         return (Math.PI*deg)/180
     }
 
-    static radToDeg(rad)
+    static radToDeg(rad: number)
     {
         return (rad*180)/Math.PI
     }

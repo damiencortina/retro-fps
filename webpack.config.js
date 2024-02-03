@@ -10,14 +10,14 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.(png|svg|jpg|jpeg|gif)$/i,
-                type: 'asset/resource',
+                test: /\.(png|jp(e*)g|svg|gif)$/,
+                use: ['file-loader'], 
             },
             {
                 test: /\.tsx?$/,
                 use: 'ts-loader',
                 exclude: /node_modules/,
-            },
+            }
         ]
     },
     resolve: {
